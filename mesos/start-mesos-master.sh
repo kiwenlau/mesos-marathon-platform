@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOCAL_IP=`ifdata -pa $INTERFACE`
+# LOCAL_IP=`ifdata -pa $INTERFACE`
 
 mesos-master --ip=$LOCAL_IP \
              --zk=zk://$LOCAL_IP:2181/mesos \

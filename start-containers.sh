@@ -2,7 +2,7 @@
 
 MASTER_IP=192.168.59.1
 SLAVE_IP=(192.168.59.2 192.168.59.3)
-INTERFACE=eth1
+# INTERFACE=eth1
 
 echo -e "\n"
 
@@ -26,14 +26,14 @@ sudo docker -H tcp://$MASTER_IP:2375 run -itd \
 echo -e "\nstart mesos master container..."
 sudo docker -H tcp://$MASTER_IP:2375 run -itd \
                                          --net=host \
-                                         -e "INTERFACE=$INTERFACE" \
+                                         -e "LOCAL_IP=$MASTER_IP" \
                                          --name=mesos_master \
                                          kiwenlau/mesos:0.26.0 start-mesos-master.sh > /dev/null
 
 
 # start mesos slave container
 for (( i = 0; i < ${#SLAVE_IP[@]}; i++ )); do
-        echo "start mesos slave$i container..."
+        echo "start mesos slave$(($i+1)) container..."
         sudo docker -H tcp://${SLAVE_IP[$i]}:2375 run -itd \
                                                       --net=host \
                                                       --pid=host \
@@ -42,8 +42,8 @@ for (( i = 0; i < ${#SLAVE_IP[@]}; i++ )); do
                                                       -v /tmp/mesos:/tmp/mesos \
                                                       --privileged \
                                                       -e "MASTER_IP=$MASTER_IP" \
-                                                      -e "INTERFACE=$INTERFACE" \
-                                                      --name=mesos_slave$i \
+                                                      -e "LOCAL_IP=${SLAVE_IP[$i]}" \
+                                                      --name=mesos_slave$(($i+1)) \
                                                       kiwenlau/mesos:0.26.0 start-mesos-slave.sh > /dev/null
 done
 
