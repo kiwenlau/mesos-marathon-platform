@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# LOCAL_IP=`ifdata -pa $INTERFACE`
-
 mesos-slave --ip=$LOCAL_IP \
             --master=zk://$MASTER_IP:2181/mesos \
             --log_dir=/log/mesos \

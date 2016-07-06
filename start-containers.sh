@@ -2,7 +2,6 @@
 
 MASTER_IP=192.168.59.1
 SLAVE_IP=(192.168.59.2 192.168.59.3)
-# INTERFACE=eth1
 
 echo -e "\n"
 

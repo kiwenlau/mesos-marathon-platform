@@ -8,7 +8,7 @@ RUN sudo echo "Asia/Tokyo" > /etc/timezone && \
 
 WORKDIR /root
 
-RUN apt-get update && apt-get install -y curl moreutils
+RUN apt-get update && apt-get install -y curl
 
 # Install Java 8 from Oracle's PPA
 RUN  sudo apt-get install -y software-properties-common && \
